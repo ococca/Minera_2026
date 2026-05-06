@@ -11,11 +11,26 @@
       --panel-soft: #202634;
       --text: #f4f6fb;
       --muted: #9ba6b7;
-      --river-red: #d71920;
-      --river-red-dark: #891016;
+      --club-primary: #d71920;
+      --club-secondary: #ffffff;
+      --club-glow: rgba(215, 25, 32, 0.3);
+      --club-focus: rgba(215, 25, 32, 0.18);
+      --club-tag-bg: rgba(215, 25, 32, 0.14);
+      --club-tag-border: rgba(215, 25, 32, 0.38);
+      --tag-color: #ffd8d9;
       --line: rgba(255, 255, 255, 0.1);
       --good: #2bd576;
       --warning: #f5b84b;
+    }
+
+    body[data-club="boca"] {
+      --club-primary: #004aad;
+      --club-secondary: #ffd100;
+      --club-glow: rgba(0, 74, 173, 0.34);
+      --club-focus: rgba(255, 209, 0, 0.2);
+      --club-tag-bg: rgba(0, 74, 173, 0.2);
+      --club-tag-border: rgba(255, 209, 0, 0.48);
+      --tag-color: #fff1a8;
     }
 
     * {
@@ -29,7 +44,7 @@
       font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(215, 25, 32, 0.3), transparent 34rem),
+        radial-gradient(circle at top left, var(--club-glow), transparent 34rem),
         linear-gradient(135deg, #0b0d12 0%, var(--bg) 60%, #15151a 100%);
       padding: 32px;
     }
@@ -60,7 +75,7 @@
       top: -120px;
       width: 260px;
       height: 520px;
-      background: var(--river-red);
+      background: var(--club-primary);
       transform: rotate(28deg);
       opacity: 0.72;
     }
@@ -81,8 +96,8 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--river-red);
-      box-shadow: 0 0 18px var(--river-red);
+      background: var(--club-primary);
+      box-shadow: 0 0 18px var(--club-primary);
     }
 
     h1 {
@@ -123,9 +138,16 @@
       font-size: 14px;
     }
 
+    .selector-group {
+      margin-top: 18px;
+    }
+
+    .selector-group + .selector-group {
+      margin-top: 14px;
+    }
+
     .season-card label {
       display: block;
-      margin-top: 18px;
       color: var(--muted);
       font-size: 12px;
       font-weight: 700;
@@ -146,8 +168,8 @@
     }
 
     .season-card select:focus {
-      border-color: rgba(215, 25, 32, 0.85);
-      box-shadow: 0 0 0 3px rgba(215, 25, 32, 0.18);
+      border-color: var(--club-primary);
+      box-shadow: 0 0 0 3px var(--club-focus);
     }
 
     .stats-grid {
@@ -212,9 +234,9 @@
       align-self: flex-start;
       padding: 7px 10px;
       border-radius: 999px;
-      color: #ffd8d9;
-      background: rgba(215, 25, 32, 0.14);
-      border: 1px solid rgba(215, 25, 32, 0.38);
+      color: var(--tag-color);
+      background: var(--club-tag-bg);
+      border: 1px solid var(--club-tag-border);
       font-size: 12px;
       font-weight: 700;
     }
@@ -275,7 +297,7 @@
     .bar-fill {
       height: 100%;
       border-radius: inherit;
-      background: linear-gradient(90deg, var(--river-red), #ff767b);
+      background: linear-gradient(90deg, var(--club-primary), var(--club-secondary));
     }
 
     .insights {
@@ -342,7 +364,7 @@
   <main class="dashboard">
     <section class="hero">
       <div>
-        <p class="eyebrow"><span class="dot"></span>River Plate - Analisis de derrotas</p>
+        <p class="eyebrow"><span class="dot"></span><span id="clubEyebrow">River Plate - Analisis de derrotas</span></p>
         <h1>Dashboard de partidos perdidos</h1>
         <p class="subtitle">
           Resumen visual con indicadores, rivales, marcadores y patrones de derrotas.
@@ -353,12 +375,22 @@
       <aside class="season-card">
         <strong id="seasonYear">2025</strong>
         <span>Temporada analizada</span>
-        <label for="seasonSelect">Cambiar temporada</label>
-        <select id="seasonSelect" aria-label="Cambiar temporada">
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-        </select>
+        <div class="selector-group">
+          <label for="clubSelect">Cambiar club</label>
+          <select id="clubSelect" aria-label="Cambiar club">
+            <option value="river">River Plate</option>
+            <option value="boca">Boca Juniors</option>
+          </select>
+        </div>
+
+        <div class="selector-group">
+          <label for="seasonSelect">Cambiar temporada</label>
+          <select id="seasonSelect" aria-label="Cambiar temporada">
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+          </select>
+        </div>
       </aside>
     </section>
 
@@ -465,7 +497,7 @@
         <div class="insights" id="insights">
           <p class="insight"><strong>Patron principal:</strong> la mayor cantidad de derrotas se concentra en el torneo local.</p>
           <p class="insight"><strong>Defensa:</strong> el equipo recibio 2 o mas goles en 5 de las 8 derrotas.</p>
-          <p class="insight"><strong>Ataque:</strong> River no convirtio goles en 3 partidos perdidos.</p>
+          <p class="insight"><strong>Ataque:</strong> el equipo no convirtio goles en 3 partidos perdidos.</p>
         </div>
       </aside>
     </section>
@@ -476,6 +508,17 @@
   </main>
 
   <script>
+    const clubs = {
+      river: {
+        name: "River Plate",
+        eyebrow: "River Plate - Analisis de derrotas"
+      },
+      boca: {
+        name: "Boca Juniors",
+        eyebrow: "Boca Juniors - Analisis de derrotas"
+      }
+    };
+
     const seasons = {
       2025: {
         losses: 8,
@@ -497,7 +540,7 @@
         insights: [
           ["Patron principal", "la mayor cantidad de derrotas se concentra en el torneo local."],
           ["Defensa", "el equipo recibio 2 o mas goles en 5 de las 8 derrotas."],
-          ["Ataque", "River no convirtio goles en 3 partidos perdidos."]
+          ["Ataque", "el equipo no convirtio goles en 3 partidos perdidos."]
         ]
       },
       2024: {
@@ -520,7 +563,7 @@
         insights: [
           ["Patron principal", "las derrotas estuvieron repartidas, aunque el torneo local tuvo mas peso."],
           ["Defensa", "el promedio de goles recibidos fue de 2.0 por derrota."],
-          ["Ataque", "River marco menos de un gol por partido perdido."]
+          ["Ataque", "el equipo marco menos de un gol por partido perdido."]
         ]
       },
       2023: {
@@ -549,6 +592,11 @@
     };
 
     const formatAverage = (value, total) => (value / total).toFixed(1);
+
+    function renderClub(club) {
+      document.body.dataset.club = club;
+      document.getElementById("clubEyebrow").textContent = clubs[club].eyebrow;
+    }
 
     function renderSeason(year) {
       const data = seasons[year];
@@ -588,6 +636,11 @@
       renderSeason(event.target.value);
     });
 
+    document.getElementById("clubSelect").addEventListener("change", (event) => {
+      renderClub(event.target.value);
+    });
+
+    renderClub("river");
     renderSeason("2025");
   </script>
 </body>
