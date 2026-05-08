@@ -7,11 +7,13 @@
   <style>
     @page {
       size: A4;
-      margin: 18mm;
+      margin: 0;
     }
 
     * {
       box-sizing: border-box;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
     }
 
     body {
@@ -36,8 +38,8 @@
     .cover {
       position: relative;
       overflow: hidden;
-      min-height: 330px;
-      padding: 30px;
+      min-height: 260px;
+      padding: 24px;
       border-radius: 2px;
       color: #ffffff;
       background:
@@ -47,89 +49,43 @@
       page-break-inside: avoid;
     }
 
-    .cover::before {
-      content: "";
-      position: absolute;
-      left: 38px;
-      top: 0;
-      width: 260px;
-      height: 100%;
-      background: linear-gradient(180deg, #3f5269 0%, #40546c 57%, transparent 57%);
-      clip-path: polygon(0 0, 100% 0, 100% 64%, 50% 78%, 0 64%);
-    }
-
-    .cover::after {
-      content: "";
-      position: absolute;
-      left: 38px;
-      bottom: 0;
-      width: 260px;
-      height: 128px;
-      background:
-        linear-gradient(150deg, #1897b4 0 36%, transparent 36%),
-        linear-gradient(150deg, transparent 34%, #72b9c7 34% 68%, transparent 68%),
-        linear-gradient(150deg, transparent 66%, #8ed8bd 66%);
-      clip-path: polygon(0 0, 50% 42%, 100% 0, 100% 45%, 50% 82%, 0 45%);
-    }
-
     .cover-content {
       position: relative;
       z-index: 1;
       display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 34px;
-      min-height: 270px;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      min-height: 210px;
       align-items: center;
-    }
-
-    .brand-panel {
-      text-align: center;
-    }
-
-    .brand-mark {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 82px;
-      height: 82px;
-      margin-bottom: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.48);
-      border-radius: 50%;
-      color: #ffffff;
-      font-size: 36px;
-      font-weight: 800;
-    }
-
-    .brand-title {
-      margin: 0;
-      color: #ffffff;
-      font-size: 24px;
-      font-weight: 300;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .brand-line {
-      width: 120px;
-      height: 2px;
-      margin: 14px auto 0;
-      background: #42c3bc;
     }
 
     .cover-copy {
       position: relative;
-      padding: 28px;
+      padding: 22px 24px;
       color: #263442;
       background: rgba(255, 255, 255, 0.9);
       border-left: 6px solid #1897b4;
       box-shadow: 0 10px 30px rgba(30, 45, 56, 0.16);
     }
 
+    .client-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .client-brand img {
+      display: block;
+      width: 130px;
+      max-width: 100%;
+      height: auto;
+    }
+
     .cover p {
       max-width: 720px;
-      margin: 14px 0 0;
+      margin: 12px 0 0;
       color: #617080;
-      font-size: 16px;
+      font-size: 14px;
     }
 
     .eyebrow {
@@ -145,7 +101,7 @@
       max-width: 820px;
       margin: 0;
       color: #2d3948;
-      font-size: 32px;
+      font-size: 27px;
       line-height: 1.1;
       letter-spacing: -0.03em;
     }
@@ -210,6 +166,7 @@
       margin-top: 12px;
       border-collapse: collapse;
       page-break-inside: auto;
+      break-inside: auto;
       background: #ffffff;
       box-shadow: 0 10px 24px rgba(30, 45, 56, 0.07);
     }
@@ -221,6 +178,12 @@
       vertical-align: top;
       text-align: left;
       font-size: 13px;
+    }
+
+    .timeline-table th:first-child,
+    .timeline-table td:first-child {
+      width: 105px;
+      white-space: nowrap;
     }
 
     th {
@@ -235,6 +198,7 @@
 
     tr {
       page-break-inside: avoid;
+      break-inside: avoid;
     }
 
     .note {
@@ -255,13 +219,147 @@
     }
 
     @media print {
+      body {
+        background:
+          radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 30%),
+          linear-gradient(135deg, rgba(42, 55, 71, 0.08), rgba(255, 255, 255, 0) 42%),
+          repeating-linear-gradient(45deg, rgba(32, 45, 58, 0.03) 0 2px, transparent 2px 7px),
+          #eef1f2;
+        font-size: 10.5px;
+        line-height: 1.28;
+      }
+
       .document {
-        padding: 0;
-        background: transparent;
+        max-width: none;
+        min-height: 100vh;
+        padding: 10mm 11mm;
+        background: rgba(255, 255, 255, 0.55);
+      }
+
+      .cover {
+        min-height: 170px;
+        padding: 16px;
+        box-shadow: 0 8px 24px rgba(30, 45, 56, 0.12);
+      }
+
+      .cover-content {
+        grid-template-columns: 150px 1fr;
+        gap: 18px;
+        min-height: 138px;
+      }
+
+      .cover-copy {
+        padding: 15px 18px;
+        margin-left: 0;
+        border-left-width: 4px;
+      }
+
+      .client-brand {
+        justify-content: center;
+      }
+
+      .client-brand img {
+        width: 130px;
+      }
+
+      .cover p {
+        margin-top: 8px;
+        font-size: 10.5px;
+      }
+
+      .eyebrow {
+        margin-bottom: 6px;
+        font-size: 9px;
+      }
+
+      h1 {
+        font-size: 19px;
+        line-height: 1.05;
       }
 
       h2 {
+        margin: 14px 0 6px;
+        padding-bottom: 4px;
+        font-size: 15px;
         page-break-after: avoid;
+      }
+
+      p {
+        margin: 4px 0;
+      }
+
+      ul {
+        margin-top: 4px;
+        padding-left: 15px;
+      }
+
+      li {
+        margin: 2px 0;
+      }
+
+      .summary-grid {
+        gap: 7px;
+        margin-top: 9px;
+      }
+
+      .summary-card {
+        padding: 9px;
+        border-radius: 9px;
+        box-shadow: none;
+      }
+
+      .summary-card strong {
+        font-size: 15px;
+      }
+
+      .summary-card span {
+        margin-top: 2px;
+        font-size: 9.5px;
+      }
+
+      table {
+        margin-top: 6px;
+        box-shadow: none;
+      }
+
+      th,
+      td {
+        padding: 4px 5px;
+        font-size: 9px;
+        line-height: 1.18;
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      table,
+      thead,
+      tbody,
+      tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      .timeline-table {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      .timeline-table th:first-child,
+      .timeline-table td:first-child {
+        width: 72px;
+      }
+
+      .note {
+        margin-top: 7px;
+        padding: 8px 10px;
+        border-left-width: 3px;
+        border-radius: 5px;
+      }
+
+      .footer {
+        margin-top: 14px;
+        padding-top: 8px;
+        font-size: 9px;
       }
     }
 
@@ -270,10 +368,13 @@
         grid-template-columns: 1fr;
       }
 
-      .cover::before,
-      .cover::after {
-        left: 24px;
-        width: 220px;
+      .client-brand {
+        justify-content: flex-start;
+      }
+
+      .cover-copy {
+        grid-column: auto;
+        margin-left: 0;
       }
     }
   </style>
@@ -282,17 +383,15 @@
   <main class="document">
     <section class="cover">
       <div class="cover-content">
-        <div class="brand-panel">
-          <div class="brand-mark">O</div>
-          <p class="brand-title">Odoo 19</p>
-          <div class="brand-line"></div>
+        <div class="client-brand" aria-label="DC Conex">
+          <img src="logo-dc-conex-transparente.png" alt="DC Conex" />
         </div>
 
         <div class="cover-copy">
           <p class="eyebrow">Propuesta preliminar</p>
-          <h1>Implementación Odoo 19 para gestión financiera, compras y activos fijos</h1>
+          <h1>Implementación Odoo 19 para gestión financiera, insumos y activos fijos</h1>
           <p>
-            Documento de alcance inicial basado en los requerimientos compartidos: empresa mediana,
+            Documento de alcance inicial basado en los requerimientos compartidos: empresa del rubro minería,
             aproximadamente 30 usuarios, casa matriz en China, interfaz multilingüe, cumplimiento fiscal local
             y escalabilidad para futuras etapas.
           </p>
@@ -302,16 +401,16 @@
 
     <section class="summary-grid" aria-label="Resumen ejecutivo">
       <article class="summary-card">
-        <strong>8 meses</strong>
+        <strong>4 a 8 meses</strong>
         <span>Duración estimada fase inicial</span>
       </article>
       <article class="summary-card">
-        <strong>160 hs</strong>
-        <span>Capacidad total estimada</span>
+        <strong>30 usuarios</strong>
+        <span>Volumen inicial estimado</span>
       </article>
       <article class="summary-card">
-        <strong>20 hs/mes</strong>
-        <span>Dedicación mensual estimada</span>
+        <strong>ARS / USD</strong>
+        <span>Operación bimonetaria</span>
       </article>
     </section>
 
@@ -323,7 +422,8 @@
     </p>
     <p>
       La solución se plantea sobre Odoo 19, alojado en infraestructura cloud de Linode, con una implementación
-      gradual que permita cubrir la operación inicial y escalar hacia nuevos módulos en etapas posteriores.
+      gradual que permita cubrir la operación inicial, contemplar gestión bimonetaria en pesos y dólares,
+      y escalar hacia nuevos módulos en etapas posteriores.
     </p>
 
     <h2>Alcance Inicial</h2>
@@ -331,86 +431,176 @@
       <li>Implementación de Odoo 19 en ambiente cloud alojado en Linode.</li>
       <li>Configuración base de compañía, usuarios, permisos e idiomas español e inglés.</li>
       <li>Revisión de compatibilidad con idioma chino para usuarios de casa matriz.</li>
-      <li>Finanzas y contabilidad base.</li>
-      <li>Compras y abastecimiento básico.</li>
-      <li>Activos fijos.</li>
-      <li>Reportes básicos de gestión.</li>
+      <li>Finanzas y contabilidad base, incluyendo operación bimonetaria en pesos y dólares.</li>
+      <li>Compras, abastecimiento de insumos y activos fijos.</li>
+      <li>Reportes iniciales de gestión.</li>
       <li>Localización fiscal argentina y análisis de requerimientos AFIP.</li>
     </ul>
 
     <h2>Capacidad de Trabajo</h2>
     <p>
-      La planificación considera una dedicación estimada de 20 horas mensuales. Por este motivo, se propone
-      una implementación progresiva por etapas, priorizando los módulos críticos y dejando funcionalidades
-      avanzadas para fases posteriores.
+      La planificación considera una implementación progresiva por etapas, con una duración estimada entre 4 y 8 meses.
+      El plazo final dependerá del relevamiento definitivo, la disponibilidad de usuarios clave, el alcance fiscal/AFIP,
+      la carga inicial de datos y el nivel de personalización requerido.
     </p>
     <div class="note">
-      La capacidad total estimada para la fase inicial es de 160 horas, calculada como 20 horas mensuales durante
-      8 meses. El cronograma puede variar según disponibilidad del cliente, definiciones fiscales y necesidad de
-      personalizaciones.
+      El esfuerzo e importe final deberán confirmarse luego del relevamiento funcional y técnico definitivo. Como referencia
+      preliminar, se considera una implementación inicial en el rango de USD 6.000 a USD 9.000, sujeta a alcance final,
+      complejidad fiscal, migración de datos y eventuales desarrollos adicionales.
+    </div>
+
+    <h2>Estimación Económica</h2>
+    <p>
+      La estimación económica preliminar para la implementación se ubica entre $8.000.000 y $12.000.000 ARS.
+      La equivalencia en dólares quedará sujeta a la cotización del día emitida por el Banco Central de la Nación Argentina.
+      Este valor es referencial y deberá confirmarse luego del relevamiento definitivo.
+    </p>
+
+    <div class="note">
+      El presupuesto base puede variar hasta un 20% una vez cerrado el relevamiento definitivo y confirmado el alcance
+      final. La estimación no incluye costos de servidor, licencias, módulos pagos de terceros ni integraciones fuera
+      del alcance inicial.
     </div>
 
     <h2>Cronograma Estimado</h2>
-    <table>
+    <table class="timeline-table">
       <thead>
         <tr>
-          <th>Mes</th>
+          <th>Período</th>
           <th>Etapa</th>
           <th>Actividades principales</th>
-          <th>Horas estimadas</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td>1</td>
+          <td>Mes 1</td>
           <td>Relevamiento y planificación</td>
           <td>Reuniones iniciales, entendimiento de procesos, alcance funcional, validación de módulos, definición de prioridades y riesgos fiscales/AFIP.</td>
-          <td>20 hs</td>
         </tr>
         <tr>
-          <td>2</td>
+          <td>Mes 1 a 2</td>
           <td>Infraestructura y ambiente base</td>
           <td>Configuración de Linode, instalación de Odoo 19, base de datos, backups iniciales, dominios, SSL, usuarios base e idiomas español/inglés.</td>
-          <td>20 hs</td>
         </tr>
         <tr>
-          <td>3</td>
+          <td>Mes 2 a 4</td>
           <td>Configuración contable inicial</td>
-          <td>Plan de cuentas, diarios, impuestos, monedas, compañía, permisos contables y configuración financiera base.</td>
-          <td>20 hs</td>
+          <td>Plan de cuentas, diarios, impuestos, monedas, operación bimonetaria, compañía, permisos contables y configuración financiera base.</td>
         </tr>
         <tr>
-          <td>4</td>
+          <td>Mes 3 a 5</td>
           <td>Localización fiscal / AFIP</td>
           <td>Relevamiento fiscal detallado, comprobantes, puntos de venta, CUIT, impuestos, validaciones y parametrización inicial AFIP.</td>
-          <td>20 hs</td>
         </tr>
         <tr>
-          <td>5</td>
-          <td>Compras / abastecimiento</td>
-          <td>Proveedores, productos/servicios, solicitudes de compra, órdenes de compra, recepción básica y circuito de aprobación simple.</td>
-          <td>20 hs</td>
+          <td>Mes 4 a 6</td>
+          <td>Compras, insumos y activos fijos</td>
+          <td>Proveedores, productos/servicios, insumos, solicitudes de compra, órdenes de compra, recepción, circuito de aprobación, categorías de activos, altas y amortizaciones.</td>
         </tr>
         <tr>
-          <td>6</td>
-          <td>Activos fijos y reportes básicos</td>
-          <td>Categorías de activos, altas, amortizaciones, reportes contables básicos, reportes de compras y seguimiento inicial.</td>
-          <td>20 hs</td>
+          <td>Mes 5 a 7</td>
+          <td>Reportes iniciales y ajustes</td>
+          <td>Reportes contables, reportes de compras, seguimiento de activos, validación de saldos, permisos y ajustes funcionales menores.</td>
         </tr>
         <tr>
-          <td>7</td>
+          <td>Mes 6 a 8</td>
           <td>Pruebas integrales y ajustes</td>
           <td>Pruebas de punta a punta, validación de circuitos, correcciones, revisión de permisos y ajustes funcionales menores.</td>
-          <td>20 hs</td>
         </tr>
         <tr>
-          <td>8</td>
+          <td>Mes 7 a 8</td>
           <td>Capacitación y puesta en marcha</td>
           <td>Capacitación a usuarios clave, acompañamiento de salida en vivo, soporte inicial, documentación básica y cierre de fase.</td>
-          <td>20 hs</td>
         </tr>
       </tbody>
     </table>
+
+    <h2>Costos Estimados de Servidor</h2>
+    <p>
+      Para el alojamiento en Linode se recomienda contemplar una instancia productiva con backups automáticos,
+      almacenamiento externo para copias adicionales y configuración de seguridad reforzada. Los valores son
+      referenciales y deberán validarse al momento de contratar el servicio.
+    </p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Opción</th>
+          <th>Componentes incluidos</th>
+          <th>Uso sugerido</th>
+          <th>Costo estimado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>No dedicada</td>
+          <td>Linode 16 GB Shared CPU, backups, Object Storage, firewall y DNS.</td>
+          <td>Alternativa inicial de menor costo, con rendimiento menos predecible.</td>
+          <td>USD 120 a USD 130 mensuales</td>
+        </tr>
+        <tr>
+          <td>Recomendada</td>
+          <td>G7 Dedicated 16 GB, backups, Object Storage, firewall y DNS.</td>
+          <td>Producción para aproximadamente 30 usuarios, con mejor estabilidad de CPU.</td>
+          <td>USD 190 a USD 210 mensuales</td>
+        </tr>
+        <tr>
+          <td>Reforzada</td>
+          <td>G7 Dedicated 16 GB, PostgreSQL administrado, backups, Object Storage, firewall y DNS.</td>
+          <td>Mayor separación de servicios, mejor mantenimiento y escalabilidad.</td>
+          <td>USD 320 a USD 350 mensuales</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      La configuración de seguridad recomendada incluye firewall, acceso SSH por llave, bloqueo de acceso root,
+      SSL/TLS, actualizaciones de seguridad, Fail2ban, backups automáticos, copias externas y pruebas periódicas
+      de restauración.
+    </div>
+
+    <h2>Resumen de Gastos Estimados</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Concepto</th>
+          <th>Estimación</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Implementación Odoo 19</td>
+          <td>$8.000.000 a $12.000.000 ARS</td>
+          <td>Valor preliminar sujeto a relevamiento definitivo. Equivalencia en dólares según cotización BCRA del día.</td>
+        </tr>
+        <tr>
+          <td>Servidor Linode no dedicado</td>
+          <td>USD 120 a USD 130 mensuales</td>
+          <td>Alternativa inicial de menor costo, con rendimiento menos predecible.</td>
+        </tr>
+        <tr>
+          <td>Servidor Linode recomendado</td>
+          <td>USD 190 a USD 210 mensuales</td>
+          <td>Opción sugerida para producción con aproximadamente 30 usuarios.</td>
+        </tr>
+        <tr>
+          <td>Servidor Linode reforzado</td>
+          <td>USD 320 a USD 350 mensuales</td>
+          <td>Incluye separación de servicios y PostgreSQL administrado.</td>
+        </tr>
+        <tr>
+          <td>Soporte post-implementación</td>
+          <td>5, 10 o 20 horas mensuales</td>
+          <td>Según plan de soporte elegido: básico, estándar o evolutivo.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      Implementación sobre Odoo Community. No se incluyen módulos pagos de terceros, dominio, asesoramiento contable/fiscal
+      externo, desarrollos personalizados ni integraciones fuera del alcance inicial.
+    </div>
 
     <h2>Desglose de Tareas</h2>
     <table>
@@ -434,7 +624,7 @@
         </tr>
         <tr>
           <td>Infraestructura Linode</td>
-          <td>Provisionamiento del servidor, instalación de Odoo 19, configuración de base de datos, SSL, dominio, accesos, respaldos iniciales y parámetros básicos de seguridad.</td>
+          <td>Provisionamiento del servidor, instalación de Odoo 19, configuración de base de datos, SSL, dominio, accesos, respaldos iniciales y parámetros de seguridad reforzada.</td>
           <td>Ambiente Odoo operativo en Linode.</td>
         </tr>
         <tr>
@@ -444,8 +634,8 @@
         </tr>
         <tr>
           <td>Finanzas y contabilidad</td>
-          <td>Configuración de plan de cuentas, diarios, impuestos, monedas, términos de pago, cuentas contables por defecto y validación de registraciones básicas.</td>
-          <td>Módulo contable parametrizado para operaciones iniciales.</td>
+          <td>Configuración de plan de cuentas, diarios, impuestos, monedas, términos de pago, cuentas contables por defecto, operación bimonetaria en pesos y dólares, y validación de registraciones.</td>
+          <td>Módulo contable parametrizado para operaciones iniciales bimonetarias.</td>
         </tr>
         <tr>
           <td>Localización fiscal / AFIP</td>
@@ -453,9 +643,9 @@
           <td>Configuración fiscal inicial y pendientes AFIP identificados.</td>
         </tr>
         <tr>
-          <td>Compras y abastecimiento</td>
-          <td>Configuración de proveedores, productos o servicios, solicitudes de compra, órdenes de compra, recepción básica, reglas simples de aprobación y validación del circuito.</td>
-          <td>Circuito básico de compras funcionando.</td>
+          <td>Compras, insumos y activos fijos</td>
+          <td>Configuración de proveedores, productos o servicios, insumos, solicitudes de compra, órdenes de compra, recepción, reglas simples de aprobación y validación del circuito.</td>
+          <td>Circuito de compras e insumos funcionando.</td>
         </tr>
         <tr>
           <td>Activos fijos</td>
@@ -463,8 +653,8 @@
           <td>Módulo de activos fijos parametrizado.</td>
         </tr>
         <tr>
-          <td>Reportes básicos</td>
-          <td>Revisión de reportes estándar, ajustes menores de visualización, validación de reportes contables, compras, activos y saldos principales.</td>
+          <td>Reportes iniciales</td>
+          <td>Revisión de reportes estándar, ajustes menores de visualización, validación de reportes contables, compras, insumos, activos, saldos principales y moneda de análisis.</td>
           <td>Set inicial de reportes operativos y contables.</td>
         </tr>
         <tr>
@@ -490,7 +680,7 @@
       <li>La implementación inicial contempla una única compañía.</li>
       <li>El cliente asignará usuarios clave para validaciones funcionales y fiscales.</li>
       <li>La carga inicial de datos será acotada y provista en formatos acordados.</li>
-      <li>Los reportes incluidos serán básicos y estándar, sin BI avanzado.</li>
+      <li>Los reportes incluidos serán iniciales y estándar, sin BI avanzado.</li>
       <li>La integración y cumplimiento AFIP quedan sujetos a relevamiento fiscal detallado.</li>
       <li>No se consideran desarrollos complejos salvo que sean definidos como alcance adicional.</li>
     </ul>
@@ -504,7 +694,7 @@
       <li>Customizaciones profundas fuera del alcance funcional inicial.</li>
     </ul>
 
-    <h2>Metodologia</h2>
+    <h2>Metodología</h2>
     <p>
       Se propone una metodología incremental, con relevamiento, parametrización, validación funcional, ajustes,
       capacitación y salida en vivo. Cada etapa deberá cerrar con validación del cliente antes de avanzar a la siguiente,
@@ -523,16 +713,16 @@
 
     <h2>Soporte Post-Implementación</h2>
     <ul>
-      <li>Plan básico: soporte correctivo y consultas puntuales.</li>
-      <li>Plan estándar: bolsa mensual de horas para soporte y pequeñas mejoras.</li>
-      <li>Plan evolutivo: soporte, mejoras continuas y preparación de nuevos módulos.</li>
+      <li>Plan básico: hasta 5 horas mensuales para soporte correctivo y consultas puntuales.</li>
+      <li>Plan estándar: hasta 10 horas mensuales para soporte, seguimiento operativo y pequeñas mejoras.</li>
+      <li>Plan evolutivo: hasta 20 horas mensuales para soporte, mejoras continuas y preparación de nuevos módulos.</li>
     </ul>
 
     <h2>Conclusiones</h2>
     <p>
-      Considerando la capacidad disponible de 20 horas mensuales, la duración recomendada para la fase inicial es de
-      8 meses. Este plazo permite abordar los módulos críticos con menor riesgo, ordenar las decisiones fiscales y dejar
-      una base preparada para futuras ampliaciones.
+      La duración recomendada para la fase inicial se estima entre 4 y 8 meses. Este plazo permite abordar los módulos
+      críticos con menor riesgo, ordenar las decisiones fiscales, contemplar operación bimonetaria y dejar una base
+      preparada para futuras ampliaciones. El importe definitivo deberá confirmarse luego del relevamiento final.
     </p>
 
     <p class="footer">
